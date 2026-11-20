@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int lastStoneWeight(vector<int>& stones) {
+        std::ranges::make_heap(stones);
+        while (stones.size() > 1) {
+            std::ranges::pop_heap(stones);
+            auto newStone = stones.back();
+            stones.pop_back();
+            std::ranges::pop_heap(stones);
+            newStone -= stones.back();
+            stones.pop_back();
+            if (newStone) {
+                stones.push_back(newStone);
+                std::ranges::push_heap(stones);
+            }
+        }
+        return stones.size() ? stones[0] : 0;
+    }
+};
